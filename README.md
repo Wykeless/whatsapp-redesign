@@ -1,4 +1,4 @@
-# whatsapp_redesign
+# Whatsapp redesign
 
 Whatsapp redesign by [Ado](https://dribbble.com/albofazl)
 
