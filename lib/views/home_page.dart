@@ -11,21 +11,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late TabController? tabController = TabController(length: 2, vsync: this);
+
   int pageIndex = 0;
+
   List<Container> containers = [
     Container(
-      color: Colors.black87,
+      color: const Color(0xff1a1a1a),
       child: ListView.builder(
         itemCount: 10,
         scrollDirection: Axis.vertical,
         itemBuilder: ((context, index) {
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 const CircleAvatar(
-                  radius: 20,
+                  radius: 30,
                 ),
                 const Expanded(
                   child: ListTile(
@@ -55,18 +57,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       ),
     ),
     Container(
-      color: Colors.black87,
+      color: const Color(0xff1a1a1a),
       child: ListView.builder(
         itemCount: 10,
         scrollDirection: Axis.vertical,
         itemBuilder: ((context, index) {
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 const CircleAvatar(
-                  radius: 20,
+                  radius: 30,
                 ),
                 const Expanded(
                   child: ListTile(
@@ -96,85 +98,94 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       ),
     ),
   ];
-  final double _iconSize = 30;
 
-  Container _bottomNavBar(BuildContext context) {
+  Widget _custonIconButton({
+    required IconData activeIcon,
+    required IconData inactiveIcon,
+    required int index,
+  }) {
+    const double iconSize = 30;
+    const Color inactiveIconColor = Color(0xff868686);
+    const Color activeIconColor = Color(0xff00c564);
+
+    return IconButton(
+      enableFeedback: false,
+      onPressed: () {
+        setState(() {
+          pageIndex = index;
+        });
+      },
+      icon: Icon(
+        pageIndex == index ? activeIcon : inactiveIcon,
+        color: pageIndex == index ? activeIconColor : inactiveIconColor,
+        size: iconSize,
+      ),
+    );
+  }
+
+  Container _bottomNavBar() {
     return Container(
-      height: 100,
+      height: 90,
       decoration: const BoxDecoration(
-        color: Colors.red,
+        color: Color(0xff1a1a1a),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.white,
+            blurRadius: 0.1,
+            spreadRadius: 0.1,
+          ),
+        ],
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
         ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          IconButton(
-            enableFeedback: false,
-            onPressed: () {
-              setState(() {
-                pageIndex = 0;
-              });
-            },
-            icon: Icon(
-              pageIndex == 0 ? Icons.home_sharp : Icons.home_outlined,
-              color: Colors.white,
-              size: _iconSize,
-            ),
+          _custonIconButton(
+            activeIcon: Icons.home_sharp,
+            inactiveIcon: Icons.home_outlined,
+            index: 0,
           ),
-          IconButton(
-            enableFeedback: false,
-            onPressed: () {
-              setState(() {
-                pageIndex = 1;
-              });
-            },
-            icon: Icon(
-              pageIndex == 1 ? Icons.phone : Icons.phone_outlined,
-              color: Colors.white,
-              size: _iconSize,
-            ),
+          _custonIconButton(
+            activeIcon: Icons.phone,
+            inactiveIcon: Icons.phone_outlined,
+            index: 1,
           ),
           GestureDetector(
             child: Container(
               width: 60,
               height: 60,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.blue,
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: const Alignment(0.8, 1.0),
+                  stops: const [0.1, 0.3, 0.6],
+                  colors: [
+                    Colors.blue,
+                    Colors.blue.shade300,
+                    Colors.green,
+                  ],
+                ),
               ),
-              child: const Icon(Icons.add),
+              child: const Icon(
+                Icons.add_rounded,
+                size: 30,
+                color: Colors.white,
+              ),
             ),
           ),
-          IconButton(
-            enableFeedback: false,
-            onPressed: () {
-              setState(() {
-                pageIndex = 2;
-              });
-            },
-            icon: Icon(
-              pageIndex == 2
-                  ? Icons.camera_alt_rounded
-                  : Icons.camera_alt_outlined,
-              color: Colors.white,
-              size: _iconSize,
-            ),
+          _custonIconButton(
+            activeIcon: Icons.camera_alt_rounded,
+            inactiveIcon: Icons.camera_alt_outlined,
+            index: 2,
           ),
-          IconButton(
-            enableFeedback: false,
-            onPressed: () {
-              setState(() {
-                pageIndex = 3;
-              });
-            },
-            icon: Icon(
-              pageIndex == 3 ? Icons.person : Icons.person_outline,
-              color: Colors.white,
-              size: _iconSize,
-            ),
+          _custonIconButton(
+            activeIcon: Icons.person,
+            inactiveIcon: Icons.person_outline,
+            index: 3,
           ),
         ],
       ),
@@ -183,8 +194,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    //Custom "scaffold" background
     return Container(
-      //Custom "scaffold" background
       decoration: const BoxDecoration(
         gradient: RadialGradient(
           center: Alignment(0.2, -1.01), // near the top right
@@ -248,6 +259,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   ],
                 ),
               ),
+              //Status row
               Positioned(
                 top: 0,
                 left: 0,
@@ -282,10 +294,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   height: 560,
                   width: double.infinity,
                   decoration: const BoxDecoration(
-                    color: Colors.black87,
+                    color: Color(0xff1a1a1a),
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25),
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
                     ),
                   ),
                   child: Column(
@@ -356,7 +368,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               //Bottom Navigation bar
               Align(
                 alignment: Alignment.bottomCenter,
-                child: _bottomNavBar(context),
+                child: _bottomNavBar(),
               )
             ],
           ),
