@@ -14,18 +14,177 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int pageIndex = 0;
   List<Container> containers = [
     Container(
-      color: Colors.white,
-      child: const Text('Page 1'),
+      color: Colors.black87,
+      child: ListView.builder(
+        itemCount: 10,
+        scrollDirection: Axis.vertical,
+        itemBuilder: ((context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const CircleAvatar(
+                  radius: 20,
+                ),
+                const Expanded(
+                  child: ListTile(
+                    title: Text(
+                      'Username',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    subtitle: Text(
+                      'Message 01',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 20,
+                  height: 20,
+                  decoration: BoxDecoration(
+                    color: const Color(0xffe45d66),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: const Center(child: Text('2')),
+                )
+              ],
+            ),
+          );
+        }),
+      ),
     ),
     Container(
-      color: Colors.white,
-      child: const Text('Page 2'),
+      color: Colors.black87,
+      child: ListView.builder(
+        itemCount: 10,
+        scrollDirection: Axis.vertical,
+        itemBuilder: ((context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const CircleAvatar(
+                  radius: 20,
+                ),
+                const Expanded(
+                  child: ListTile(
+                    title: Text(
+                      'Username',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    subtitle: Text(
+                      'Message 01',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 20,
+                  height: 20,
+                  decoration: BoxDecoration(
+                    color: const Color(0xffe45d66),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: const Center(child: Text('2')),
+                )
+              ],
+            ),
+          );
+        }),
+      ),
     ),
   ];
+  final double _iconSize = 30;
+
+  Container _bottomNavBar(BuildContext context) {
+    return Container(
+      height: 100,
+      decoration: const BoxDecoration(
+        color: Colors.red,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          IconButton(
+            enableFeedback: false,
+            onPressed: () {
+              setState(() {
+                pageIndex = 0;
+              });
+            },
+            icon: Icon(
+              pageIndex == 0 ? Icons.home_sharp : Icons.home_outlined,
+              color: Colors.white,
+              size: _iconSize,
+            ),
+          ),
+          IconButton(
+            enableFeedback: false,
+            onPressed: () {
+              setState(() {
+                pageIndex = 1;
+              });
+            },
+            icon: Icon(
+              pageIndex == 1 ? Icons.phone : Icons.phone_outlined,
+              color: Colors.white,
+              size: _iconSize,
+            ),
+          ),
+          GestureDetector(
+            child: Container(
+              width: 60,
+              height: 60,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.blue,
+              ),
+              child: const Icon(Icons.add),
+            ),
+          ),
+          IconButton(
+            enableFeedback: false,
+            onPressed: () {
+              setState(() {
+                pageIndex = 2;
+              });
+            },
+            icon: Icon(
+              pageIndex == 2
+                  ? Icons.camera_alt_rounded
+                  : Icons.camera_alt_outlined,
+              color: Colors.white,
+              size: _iconSize,
+            ),
+          ),
+          IconButton(
+            enableFeedback: false,
+            onPressed: () {
+              setState(() {
+                pageIndex = 3;
+              });
+            },
+            icon: Icon(
+              pageIndex == 3 ? Icons.person : Icons.person_outline,
+              color: Colors.white,
+              size: _iconSize,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      //Custom "scaffold" background
       decoration: const BoxDecoration(
         gradient: RadialGradient(
           center: Alignment(0.2, -1.01), // near the top right
@@ -58,6 +217,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   ),
                 ),
               ),
+              //Custom appbar
               Align(
                 alignment: Alignment.topCenter,
                 child: Row(
@@ -88,14 +248,45 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   ],
                 ),
               ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 500,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: ((context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: CircleAvatar(
+                          radius: 32,
+                          backgroundColor: Colors.transparent,
+                          child: CustomPaint(
+                            painter: CirclePainter(),
+                            child: const CircleAvatar(
+                              radius: 22,
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+              ),
+              //Chat screen body
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  height: 550,
+                  height: 560,
                   width: double.infinity,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.black87,
-                    borderRadius: BorderRadius.circular(25),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25),
+                      topRight: Radius.circular(25),
+                    ),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -106,13 +297,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       Stack(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(
-                              left: 25,
-                              right: 25,
-                              top: 0,
-                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 17),
                             child: Container(
-                              height: 30,
+                              height: 40,
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 color: const Color(0xff222222),
@@ -122,7 +309,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           ),
                           TabBar(
                             padding: const EdgeInsets.only(
-                                left: 30, right: 30, top: 5),
+                                left: 30, right: 30, top: 11),
                             controller: tabController,
                             tabs: [
                               Text(
@@ -157,11 +344,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         height: 30,
                       ),
                       Expanded(
-                        child: containers[tabController!.index],
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: containers[tabController!.index],
+                        ),
                       ),
                     ],
                   ),
                 ),
+              ),
+              //Bottom Navigation bar
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: _bottomNavBar(context),
               )
             ],
           ),
@@ -262,5 +457,33 @@ class _BubblePainter extends BoxPainter {
       ),
       paint,
     );
+  }
+}
+
+class CirclePainter extends CustomPainter {
+  var wavePaint = Paint()
+    ..color = Colors.black
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = 3.0
+    ..isAntiAlias = true
+    ..shader = const RadialGradient(
+      colors: [
+        Color(0xff2e6dea),
+        Color(0xff00b759),
+      ],
+    ).createShader(Rect.fromCircle(
+      center: const Offset(25, 50),
+      radius: 65,
+    ));
+  @override
+  void paint(Canvas canvas, Size size) {
+    double centerX = size.width / 2.0;
+    double centerY = size.height / 2.0;
+    canvas.drawCircle(Offset(centerX, centerY), 27.0, wavePaint);
+  }
+
+  @override
+  bool shouldRepaint(CirclePainter oldDelegate) {
+    return false;
   }
 }
