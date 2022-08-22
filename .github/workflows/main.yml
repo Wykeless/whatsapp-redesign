@@ -18,11 +18,12 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v3
-
+      
       # Set up Flutter.
       - uses: subosito/flutter-action@v1
         with:
           channel: "stable"
+          fetch-depth: 0
       - run: flutter doctor -v
 
       # Checkout the repository code and get packages.
