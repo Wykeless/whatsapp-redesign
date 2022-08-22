@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:whatsapp_redesign/data/data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     Container(
       color: const Color(0xff1a1a1a),
       child: ListView.builder(
-        itemCount: 10,
+        itemCount: users.length,
         scrollDirection: Axis.vertical,
         itemBuilder: ((context, index) {
           return Padding(
@@ -26,18 +27,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 30,
+                  backgroundImage:
+                      NetworkImage(users[index].profilePictureUrl!),
                 ),
-                const Expanded(
+                Expanded(
                   child: ListTile(
                     title: Text(
-                      'Username',
-                      style: TextStyle(color: Colors.white),
+                      users[index].username!,
+                      style: const TextStyle(color: Colors.white),
                     ),
                     subtitle: Text(
-                      'Message 01',
-                      style: TextStyle(color: Colors.white),
+                      users[index].textMessages!.last,
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
@@ -48,7 +51,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     color: const Color(0xffe45d66),
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  child: const Center(child: Text('2')),
+                  child: Center(
+                      child:
+                          Text(users[index].textMessages!.length.toString())),
                 )
               ],
             ),
@@ -269,6 +274,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
+                    itemCount: users.length,
                     itemBuilder: ((context, index) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -277,8 +283,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           backgroundColor: Colors.transparent,
                           child: CustomPaint(
                             painter: CirclePainter(),
-                            child: const CircleAvatar(
+                            child: CircleAvatar(
                               radius: 22,
+                              backgroundImage:
+                                  NetworkImage(users[index].statusUrl!),
                             ),
                           ),
                         ),
