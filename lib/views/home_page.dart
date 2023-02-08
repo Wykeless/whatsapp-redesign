@@ -159,6 +159,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             index: 1,
           ),
           GestureDetector(
+            onTap: (() => print('Yes')),
             child: Container(
               width: 60,
               height: 60,
