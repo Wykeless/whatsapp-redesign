@@ -64,33 +64,41 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     Container(
       color: const Color(0xff1a1a1a),
       child: ListView.builder(
-        itemCount: 10,
+        itemCount: groups.length,
         scrollDirection: Axis.vertical,
         itemBuilder: ((context, index) {
-          return const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 CircleAvatar(
                   radius: 30,
+                  backgroundImage:
+                      NetworkImage(groups[index].profilePictureUrl!),
                 ),
                 Expanded(
                   child: ListTile(
                     title: Text(
-                      'Username',
-                      style: TextStyle(color: Colors.white),
+                      groups[index].username!,
+                      style: const TextStyle(color: Colors.white),
                     ),
                     subtitle: Text(
-                      'Message 01',
-                      style: TextStyle(color: Colors.white),
+                      groups[index].textMessages!.last,
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
-                SizedBox(
+                Container(
                   width: 20,
                   height: 20,
-                  child: Center(child: Text('2')),
+                  decoration: BoxDecoration(
+                    color: const Color(0xffe45d66),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: Center(
+                      child:
+                          Text(users[index].textMessages!.length.toString())),
                 )
               ],
             ),
