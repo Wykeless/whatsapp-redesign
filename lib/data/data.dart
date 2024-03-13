@@ -29,7 +29,7 @@ List<User> users = [
       "textMessage 02",
       "textMessage 03",
     ],
-    profilePictureUrl: "https://via.placeholder.com/150/f4f4f4",
-    statusUrl: "https://via.placeholder.com/150/f4f4f4",
+    profilePictureUrl: "https://via.placeholder.com/150/ff0000",
+    statusUrl: "https://via.placeholder.com/150/ff0000",
   ),
 ];

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:whatsapp_redesign/data/data.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -67,15 +67,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         itemCount: 10,
         scrollDirection: Axis.vertical,
         itemBuilder: ((context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          return const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.0),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 30,
                 ),
-                const Expanded(
+                Expanded(
                   child: ListTile(
                     title: Text(
                       'Username',
@@ -87,14 +87,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 20,
                   height: 20,
-                  decoration: BoxDecoration(
-                    color: const Color(0xffe45d66),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: const Center(child: Text('2')),
+                  child: Center(child: Text('2')),
                 )
               ],
             ),
@@ -208,7 +204,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           radius: 0.5,
           colors: <Color>[
             Color(0xFF1f4138), // green
-            Color(0xFF1e1d1e), // black
+            Color.fromARGB(255, 36, 36, 35), // black
           ],
           stops: <double>[0.15, 1.0],
         ),
@@ -318,7 +314,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       Stack(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 17),
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
                             child: Container(
                               height: 40,
                               width: double.infinity,
@@ -329,8 +325,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             ),
                           ),
                           TabBar(
+                            dividerColor: Colors.transparent,
+                            indicatorWeight: 0,
+                            indicatorSize: TabBarIndicatorSize.tab,
+                            labelColor: const Color(0xffffffff),
                             padding: const EdgeInsets.only(
-                                left: 30, right: 30, top: 11),
+                                left: 30, right: 30, top: 9),
                             controller: tabController,
                             tabs: [
                               Text(
@@ -351,7 +351,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               ),
                             ],
                             indicator: const BubbleTabIndicator(
-                              indicatorHeight: 30,
+                              indicatorHeight: 35,
                               insets: EdgeInsets.all(0),
                               indicatorColor: Color(0xff323232),
                             ),
@@ -428,13 +428,13 @@ class BubbleTabIndicator extends Decoration {
   }
 
   @override
-  _BubblePainter createBoxPainter([VoidCallback? onChanged]) {
-    return _BubblePainter(this, onChanged);
+  BubblePainter createBoxPainter([VoidCallback? onChanged]) {
+    return BubblePainter(this, onChanged);
   }
 }
 
-class _BubblePainter extends BoxPainter {
-  _BubblePainter(this.decoration, VoidCallback? onChanged) : super(onChanged);
+class BubblePainter extends BoxPainter {
+  BubblePainter(this.decoration, VoidCallback? onChanged) : super(onChanged);
 
   final BubbleTabIndicator decoration;
 
@@ -483,7 +483,7 @@ class _BubblePainter extends BoxPainter {
 
 class CirclePainter extends CustomPainter {
   var wavePaint = Paint()
-    ..color = Colors.black
+    ..color = const Color.fromARGB(255, 41, 41, 41)
     ..style = PaintingStyle.stroke
     ..strokeWidth = 3.0
     ..isAntiAlias = true
